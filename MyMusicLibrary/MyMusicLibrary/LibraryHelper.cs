@@ -25,12 +25,13 @@ namespace MyMusicLibrary
 
             var file = await picker.PickSingleFileAsync();
             var folder = ApplicationData.Current.LocalFolder;
+            var musicFolder = await folder.CreateFolderAsync("musicfolder", CreationCollisionOption.OpenIfExists);
                 //put file in future access list so it can be accessed when application is closed and reopened
                 Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(file);
                 //File is copied to local folder for use in music library
                 if (folder != null && file != null)
                 {
-                    await file.CopyAsync(folder, file.Name, NameCollisionOption.GenerateUniqueName);
+                    await file.CopyAsync(musicFolder, file.Name, NameCollisionOption.GenerateUniqueName);
                 }
         }
 
